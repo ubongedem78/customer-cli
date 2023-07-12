@@ -1,0 +1,26 @@
+{
+  "name": "customer_cli",
+  "version": "1.0.0",
+  "description": "Customer management CLI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ubongedem78/customer_cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ubongedem78/customer_cli/issues"
+  },
+  "homepage": "https://github.com/ubongedem78/customer_cli#readme",
+  "dependencies": {
+    "commander": "^11.0.0",
+    "inquirer": "^9.2.7",
+    "mongoose": "^7.3.4"
+  }
+}
