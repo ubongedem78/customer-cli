@@ -26,6 +26,7 @@ const findCustomer = async (name) => {
     });
     console.info(customers);
     console.info(`${customers.length} matches`); //search in first name or last name & return matches
+    mongoose.disconnect();
   } catch (error) {
     console.error("Error finding customer:", error);
   }
