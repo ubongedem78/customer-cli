@@ -11,10 +11,10 @@ const addCustomer = async (customer) => {
   try {
     const newCustomer = await Customer.create(customer);
     console.info("New Customer Added...", newCustomer);
-    mongoose.disconnect();
   } catch (error) {
     console.log("Error adding customer", error);
   }
+  mongoose.disconnect();
 };
 
 const findCustomer = async (name) => {
@@ -26,10 +26,10 @@ const findCustomer = async (name) => {
     });
     console.info(customers);
     console.info(`${customers.length} matches`); //search in first name or last name & return matches
-    mongoose.disconnect();
   } catch (error) {
     console.error("Error finding customer:", error);
   }
+  mongoose.disconnect();
 };
 
 module.exports = {
