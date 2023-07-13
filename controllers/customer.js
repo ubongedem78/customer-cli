@@ -1,22 +1,28 @@
 const connectDB = require("../db/connect");
 const Customer = require("../models/customer");
 
-const addCustomer = (customer) => {
-  Customer.create(customer).then((customer) => {
-    console.info("New Customer Added...");
+const addCustomer = async (customer) => {
+  try {
+    const newCustomer = await Customer.create(customer);
+    console.info("New Customer Added...", newCustomer);
     connectDB.close();
-  });
+  } catch (error) {
+    console.log("Error adding customer", error);
+  }
 };
 
-const findCustomer = (name) => {
-  //make case insensitive
-  const search = new RegExp(anme, "i");
-  Customer.find({ $or: [{ firstname: search }, { lastname: search }] }).then(
-    (customer) => {
-      console.info(customer);
-      console.info(`${customer.length} matches`);
-    }
-  ); //search in first name or last name & return matches
+const findCustomer = async (name) => {
+  try {
+    //make case insensitive
+    const search = new RegExp(name, "i");
+    const customers = await Customer.find({
+      $or: [{ firstname: search }, { lastname: search }],
+    });
+    console.info(customers);
+    console.info(`${customers.length} matches`); //search in first name or last name & return matches
+  } catch (error) {
+    console.error("Error finding customer:", error);
+  }
 };
 
 module.exports = {
