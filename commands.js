@@ -1,4 +1,4 @@
-const { program } = require("commander");
+const  program  = require("commander");
 const { addCustomer, findCustomer } = require("./controllers/customer");
 
 program.version("1.0.0").description("Client Management System");

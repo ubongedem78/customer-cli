@@ -5,7 +5,7 @@ const addCustomer = async (customer) => {
   try {
     const newCustomer = await Customer.create(customer);
     console.info("New Customer Added...", newCustomer);
-    connectDB.close();
+    mongoose.disconnect();
   } catch (error) {
     console.log("Error adding customer", error);
   }
