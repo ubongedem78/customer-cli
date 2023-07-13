@@ -32,7 +32,32 @@ const findCustomer = async (name) => {
   mongoose.disconnect();
 };
 
+//update Customer
+const updateCustomer = async (_id, customer) => {
+  const newCustomer = await Customer.updateOne({ _id }, customer);
+  console.info("Customer Updated", newCustomer);
+  mongoose.disconnect();
+};
+
+//delete Customer
+const removeCustomer = async (_id) => {
+  const deletedCustomer = await Customer.remove({ _id });
+  console.info(`${deletedCustomer} has been deleted`);
+  mongoose.disconnect();
+};
+
+//List Customers
+const listCustomers = async () => {
+  const customers = await Customer.find({});
+  console.info(customers);
+  console.info(`${customers.length} customers`);
+  mongoose.disconnect();
+};
+
 module.exports = {
   addCustomer,
   findCustomer,
+  updateCustomer,
+  listCustomers,
+  removeCustomer,
 };
