@@ -1,11 +1,12 @@
 {
-  "name": "customer_cli",
+  "name": "customer-cli",
   "version": "1.0.0",
   "description": "Customer management CLI",
   "main": "index.js",
+  "preferGlobal": true,
+  "bin": "./commands.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",

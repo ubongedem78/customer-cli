@@ -9,49 +9,75 @@ const connectDB = mongoose.connect(process.env.MONGO_URI, {
 
 const addCustomer = async (customer) => {
   try {
+    if (
+      !customer.firstname ||
+      !customer.lastname ||
+      !customer.phone ||
+      !customer.email
+    ) {
+      throw new Error(
+        "Customer not added. Please provide all required fields."
+      );
+    }
     const newCustomer = await Customer.create(customer);
     console.info("New Customer Added...", newCustomer);
   } catch (error) {
-    console.log("Error adding customer", error);
+    if (error.code && error.code === 11000) {
+      console.log(
+        `Duplicate value entered for ${Object.keys(
+          error.keyValue
+        )}, please choose another value`
+      );
+    } else console.log("Error adding customer", error);
   }
-  mongoose.disconnect();
+  mongoose.connection.close();
 };
 
 const findCustomer = async (name) => {
   try {
     //make case insensitive
     const search = new RegExp(name, "i");
+    if (!search) {
+      throw new Error("Please enter First or Last name");
+    }
     const customers = await Customer.find({
       $or: [{ firstname: search }, { lastname: search }],
     });
     console.info(customers);
-    console.info(`${customers.length} matches`); //search in first name or last name & return matches
+    console.info(`${customers.length} matches`);
+    //search in first name or last name & return matches
   } catch (error) {
     console.error("Error finding customer:", error);
   }
-  mongoose.disconnect();
+  mongoose.connection.close();
 };
 
 //update Customer
 const updateCustomer = async (_id, customer) => {
-  const newCustomer = await Customer.updateOne({ _id }, customer);
-  console.info("Customer Updated", newCustomer);
-  mongoose.disconnect();
+  const newCustomer = await Customer.findOneAndUpdate({ _id }, customer);
+  if (!newCustomer) {
+    throw new Error("Failed to update");
+  }
+  console.info("Customer Updated");
+  mongoose.connection.close();
 };
 
 //delete Customer
 const removeCustomer = async (_id) => {
-  const deletedCustomer = await Customer.remove({ _id });
+  const deletedCustomer = await Customer.findByIdAndRemove({ _id });
   console.info(`${deletedCustomer} has been deleted`);
-  mongoose.disconnect();
+  mongoose.connection.close();
 };
 
 //List Customers
 const listCustomers = async () => {
   const customers = await Customer.find({});
   console.info(customers);
+  if (!customers) {
+    throw new Error("No Customers have been registered");
+  }
   console.info(`${customers.length} customers`);
-  mongoose.disconnect();
+  mongoose.connection.close();
 };
 
 module.exports = {
