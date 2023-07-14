@@ -65,7 +65,9 @@ const updateCustomer = async (_id, customer) => {
 //delete Customer
 const removeCustomer = async (_id) => {
   const deletedCustomer = await Customer.findByIdAndRemove({ _id });
-  console.info(`${deletedCustomer} has been deleted`);
+  console.info(
+    `Customer with name: ${deletedCustomer.firstname} has been deleted`
+  );
   mongoose.connection.close();
 };
 
