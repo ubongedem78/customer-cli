@@ -9,16 +9,6 @@ const connectDB = mongoose.connect(process.env.MONGO_URI, {
 
 const addCustomer = async (customer) => {
   try {
-    if (
-      !customer.firstname ||
-      !customer.lastname ||
-      !customer.phone ||
-      !customer.email
-    ) {
-      throw new Error(
-        "Customer not added. Please provide all required fields."
-      );
-    }
     const newCustomer = await Customer.create(customer);
     console.info("New Customer Added...", newCustomer);
   } catch (error) {
